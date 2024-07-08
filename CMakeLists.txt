@@ -88,19 +88,19 @@ set_target_properties("${PROJECT_NAME}"
         INSTALL_RPATH "${CMAKE_CURRENT_SOURCE_DIR}/TestPlugin/build"
 )
 
-add_subdirectory(TestPlugin)
-add_dependencies("${PROJECT_NAME}" TestPlugin)
+# add_subdirectory(TestPlugin)
+# add_dependencies("${PROJECT_NAME}" TestPlugin)
 
-link_directories("${PROJECT_NAME}" External/haptic_macos/src/lib)
+# link_directories("${PROJECT_NAME}" External/haptic_macos/src/lib)
 
-add_subdirectory(External/haptic_macos)
-add_dependencies("${PROJECT_NAME}" HapticMacos)
+# add_subdirectory(External/haptic_macos)
+# add_dependencies("${PROJECT_NAME}" HapticMacos)
 
 target_link_libraries("${PROJECT_NAME}"
         PRIVATE
-        lua
+        # lua
         juce_plugin_modules
-        HapticMacos
+        # HapticMacos
 )
 
 message(STATUS "Forwarding CMake/Compiler info\n"

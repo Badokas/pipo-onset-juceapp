@@ -1,0 +1,69 @@
+# cmake_minimum_required(VERSION 3.15)
+
+add_subdirectory(JUCE)
+
+include(cmake/WarningFlags.cmake)
+
+#target_compile_options(glaze_glaze INTERFACE -Werror -Wall -Wextra)
+# target_compile_options(glaze_glaze INTERFACE -Wno-everything)
+
+
+# subproject_version(JUCE juce_version)
+# message(STATUS "VERSION for JUCE: ${juce_version}")
+
+add_library(juce_plugin_modules STATIC)
+
+target_link_libraries(juce_plugin_modules
+        PRIVATE
+        juce::juce_audio_utils
+        juce::juce_dsp
+        juce::juce_animation
+        # chowdsp::chowdsp_logging
+        # chowdsp::chowdsp_plugin_base
+        # chowdsp::chowdsp_plugin_state
+        # chowdsp::chowdsp_plugin_utils
+        # chowdsp::chowdsp_visualizers
+        # glaze::glaze
+        melatonin_inspector
+        PUBLIC
+        juce::juce_recommended_config_flags
+        juce::juce_recommended_lto_flags
+        # juce::juce_recommended_warning_flags # TODO: swap with warning_flags
+        warning_flags
+)
+
+if (NOT IOS)
+    # add_subdirectory(clap-juce-extensions EXCLUDE_FROM_ALL)
+    # target_link_libraries(juce_plugin_modules
+    #     PRIVATE
+    #         chowdsp::chowdsp_clap_extensions
+    #         clap_juce_extensions
+    # )
+endif ()
+
+# add_diagnostic_info(juce_plugin_modules)
+
+target_compile_definitions(juce_plugin_modules
+        PUBLIC
+        JUCER_ENABLE_GPL_MODE=1
+        JUCE_DISPLAY_SPLASH_SCREEN=0
+        JUCE_REPORT_APP_USAGE=0
+        JUCE_WEB_BROWSER=0
+        JUCE_USE_CURL=0
+        JUCE_VST3_CAN_REPLACE_VST2=0
+        JUCE_DISABLE_JUCE_VERSION_PRINTING=1 # do we need this?
+        INTERFACE
+        $<TARGET_PROPERTY:juce_plugin_modules,COMPILE_DEFINITIONS>
+)
+
+target_include_directories(juce_plugin_modules
+        INTERFACE
+        $<TARGET_PROPERTY:juce_plugin_modules,INCLUDE_DIRECTORIES>
+)
+
+set_target_properties(juce_plugin_modules PROPERTIES
+        POSITION_INDEPENDENT_CODE TRUE
+        VISIBILITY_INLINES_HIDDEN TRUE
+        C_VISBILITY_PRESET hidden
+        CXX_VISIBILITY_PRESET hidden
+)
