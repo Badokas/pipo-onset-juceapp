@@ -21,5 +21,7 @@ private:
   int og_width_ = 0;
   int og_height_ = 0;
 
+  juce::String alt_mode_windowsize_{juce::String("")};
+
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow)
 };

@@ -27,7 +27,7 @@ public:
 
     // Initialize ApplicationProperties
     juce::PropertiesFile::Options options;
-    options.applicationName = "Monulator";
+    options.applicationName = "PipoOnset";
     options.filenameSuffix = ".settings";
     options.osxLibrarySubFolder = "Application Support";
     options.folderName = "VOID9";

@@ -79,6 +79,6 @@ void MainWindow::activeWindowStatusChanged() {
   if (main_component_ == nullptr)
     return;
 
-  if (main_component_->monai_device.keyboard.isShowing())
-    main_component_->monai_device.keyboard.grabKeyboardFocus();
+  // if (main_component_->monai_device.keyboard.isShowing())
+  //   main_component_->monai_device.keyboard.grabKeyboardFocus();
 }

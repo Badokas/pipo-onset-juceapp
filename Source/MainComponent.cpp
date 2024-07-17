@@ -10,7 +10,7 @@ MainComponent::MainComponent(
   setSize(static_cast<int>((1032 + device_margin_ * 2) * scale_),
           static_cast<int>(500 * scale_));
 
-  audio_engine_ = std::make_unique<MonaiAudioEngine>();
+  // audio_engine_ = std::make_unique<MonaiAudioEngine>();
 
   // deviceManager.chooseBestSampleRate(44100.f);
   // deviceManager.chooseBestBufferSize(64);
@@ -85,9 +85,9 @@ void MainComponent::prepareToPlay(int samplesPerBlockExpected,
         device->getActiveOutputChannels().toInteger();
 
     if (activeInputChannels == 1) {
-      audio_engine_->SetInputIsMono(true);
+      // audio_engine_->SetInputIsMono(true);
     } else {
-      audio_engine_->SetInputIsMono(false);
+      // audio_engine_->SetInputIsMono(false);
     }
 
     audio_setup = deviceManager.getAudioDeviceSetup();
@@ -135,4 +135,36 @@ void MainComponent::paint(juce::Graphics &g) {
 
 void MainComponent::resized() {
   inspectorBtn_.setBounds(10, getHeight() - 100, 100, 20);
+}
+
+bool MainComponent::keyPressed(const juce::KeyPress &key) {
+  // printf("MainComponent::keyPressed %i %i \r\n", key.getKeyCode(),
+  // key.getModifiers());
+
+  const auto keycode = key.getKeyCode();
+  const auto modifiers = key.getModifiers();
+
+  if (modifiers.isCommandDown()) {
+    if (keycode == 81) // Q
+    {
+      if (juce::JUCEApplicationBase::isStandaloneApp())
+        juce::JUCEApplicationBase::quit();
+
+      return true;
+    }
+
+    // if (keycode == 49) // 1
+    // {
+    //   tabButtonComponent_.tabBar.setCurrentTabIndex(0);
+    //   return true;
+    // }
+
+    // if (keycode == 50) // 2
+    // {
+    //   tabButtonComponent_.tabBar.setCurrentTabIndex(1);
+    //   return true;
+    // }
+  }
+
+  return false;
 }
